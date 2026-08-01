@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: your-dockerhub-username/backend-scrumify
+  IMAGE_NAME: sinhnguyen417/backend-scrumify
   IMAGE_TAG: ${{ github.sha }}
 
   VPS_HOST: scrumify-sandbox
