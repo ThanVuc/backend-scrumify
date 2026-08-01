@@ -14,7 +14,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
   VPS_HOST: scrumify-sandbox
-  VPS_USER: root
+  VPS_USER: sinh
   DEPLOY_PATH: ~/side-project/devoop-scrumify
   SERVICE_NAME: api
 
