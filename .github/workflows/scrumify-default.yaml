@@ -1,0 +1,90 @@
+name: Scrumify CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: your-dockerhub-username/backend-scrumify
+  IMAGE_TAG: ${{ github.sha }}
+
+  VPS_HOST: scrumify-sandbox
+  VPS_USER: root
+  DEPLOY_PATH: ~/side-project/devoop-scrumify
+  SERVICE_NAME: api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t $IMAGE_NAME:$IMAGE_TAG \
+            -t $IMAGE_NAME:latest \
+            .
+
+      - name: Push Docker images
+        if: github.event_name == 'push'
+        run: |
+          docker push $IMAGE_NAME:$IMAGE_TAG
+          docker push $IMAGE_NAME:latest
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          ssh $VPS_USER@$VPS_HOST << EOF
+            set -e
+
+            cd $DEPLOY_PATH
+
+            ./scripts/deploy.sh $SERVICE_NAME
+
+            curl \
+              --retry 20 \
+              --retry-delay 3 \
+              --retry-all-errors \
+              --fail \
+              http://localhost:5000/actuator/health
+
+            echo "✅ Deployment completed successfully."
+          EOF
