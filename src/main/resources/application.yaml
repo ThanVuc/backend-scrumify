@@ -1,12 +1,24 @@
+server:
+  port: ${SERVER_PORT:5000}
+
+debug: true
+
 spring:
   application:
     name: scrumify
+
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:scrumify;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
-    username: ${SPRING_DATASOURCE_USERNAME:sa}
-    password: ${SPRING_DATASOURCE_PASSWORD:}
-    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/scrumify}
+    username: ${SPRING_DATASOURCE_USERNAME:scrumify}
+    password: ${SPRING_DATASOURCE_PASSWORD:@scrumify123}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
   jpa:
     hibernate:
-      ddl-auto: update
-    database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.H2Dialect}
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  config: classpath:configuration/logback-spring.xml
