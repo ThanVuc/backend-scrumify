@@ -1,7 +1,6 @@
 package com.scrumify.scrumify.api.advice;
 
 import com.scrumify.scrumify.api.error.ApiErrorResponse;
-import com.scrumify.scrumify.domain.exception.BaseException;
 import com.scrumify.scrumify.domain.exception.BusinessValidationException;
 import com.scrumify.scrumify.domain.exception.ConflictException;
 import com.scrumify.scrumify.domain.exception.ResourceNotFoundException;
@@ -32,14 +31,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessValidationException.class)
     public ResponseEntity<ApiErrorResponse> handleBusinessValidation(BusinessValidationException ex, HttpServletRequest request) {
         return buildResponse(ex.getCode(), ex.getDetail(), request, HttpStatus.UNPROCESSABLE_ENTITY, ex);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleUnexpected(Exception ex, HttpServletRequest request) {
-        log.error("Unexpected error while handling request {}", request.getRequestURI(), ex);
-        String traceId = MDC.get("traceId");
-        ApiErrorResponse body = new ApiErrorResponse("internal.server_error", "An unexpected error occurred", request.getRequestURI(), traceId);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
     }
 
     private ResponseEntity<ApiErrorResponse> buildResponse(String code, String detail, HttpServletRequest request, HttpStatus status, Exception ex) {
