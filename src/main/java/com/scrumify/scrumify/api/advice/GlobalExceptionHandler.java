@@ -1,6 +1,6 @@
 package com.scrumify.scrumify.api.advice;
 
-import com.scrumify.scrumify.api.error.ApiErrorResponse;
+import com.scrumify.scrumify.api.dto.response.common.ApiErrorResponse;
 import com.scrumify.scrumify.domain.exception.BusinessValidationException;
 import com.scrumify.scrumify.domain.exception.ConflictException;
 import com.scrumify.scrumify.domain.exception.ResourceNotFoundException;

@@ -1,4 +1,4 @@
-package com.scrumify.scrumify.api.dto.request;
+package com.scrumify.scrumify.api.dto.request.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,5 +17,13 @@ public record RegisterRequest (
         max = 128,
         message = "Password must be between 8 and 128 characters"
     )
-    String password
+    String password,
+
+    @NotBlank(message = "Confirm password is required")
+    @Size(
+        min = 8,
+        max = 128,
+        message = "Confirm password must be between 8 and 128 characters"
+    )
+    String confirmPassword
 ){}

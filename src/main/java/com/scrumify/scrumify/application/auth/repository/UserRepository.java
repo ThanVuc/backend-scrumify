@@ -8,5 +8,6 @@ import com.scrumify.scrumify.domain.entity.user.User;
 public interface UserRepository {
     boolean existsByEmail(String email);
     User save(User user);
+    Optional<User> findByEmail(String email);
     Optional<User> findById(UUID id);
 }

@@ -1,0 +1,5 @@
+ALTER TABLE users
+    RENAME COLUMN role TO roles;
+
+ALTER TABLE users
+    ALTER COLUMN roles TYPE VARCHAR(256);
