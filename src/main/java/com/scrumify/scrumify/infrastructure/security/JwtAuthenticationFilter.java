@@ -1,4 +1,4 @@
-package com.scrumify.scrumify.api.filter;
+package com.scrumify.scrumify.infrastructure.security;
 
 import java.io.IOException;
 import java.util.List;
