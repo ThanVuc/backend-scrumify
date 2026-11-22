@@ -29,65 +29,65 @@ import org.springframework.http.ResponseCookie;
 @RequestMapping("/api/v1/as")
 @Slf4j
 public class AuthController {
-    private final RegisterCommandHandler registerCommandHandler;
-    private final LoginCommandHandler loginCommandHandler;
-    private final MeQueryHandler meQueryHandler;
+        private final RegisterCommandHandler registerCommandHandler;
+        private final LoginCommandHandler loginCommandHandler;
+        private final MeQueryHandler meQueryHandler;
 
-    public AuthController(
-            RegisterCommandHandler registerCommandHandler,
-            LoginCommandHandler loginCommandHandler,
-            MeQueryHandler meQueryHandler) {
-        this.registerCommandHandler = registerCommandHandler;
-        this.loginCommandHandler = loginCommandHandler;
-        this.meQueryHandler = meQueryHandler;
-    }
+        public AuthController(
+                        RegisterCommandHandler registerCommandHandler,
+                        LoginCommandHandler loginCommandHandler,
+                        MeQueryHandler meQueryHandler) {
+                this.registerCommandHandler = registerCommandHandler;
+                this.loginCommandHandler = loginCommandHandler;
+                this.meQueryHandler = meQueryHandler;
+        }
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void register(
-            @Valid @RequestBody RegisterRequest request,
-            HttpServletResponse response) {
-        var command = AuthMapper.toRegisterCommand(request);
-        var accessToken = registerCommandHandler.Handle(command);
+        @PostMapping("/register")
+        @ResponseStatus(HttpStatus.CREATED)
+        public void register(
+                        @Valid @RequestBody RegisterRequest request,
+                        HttpServletResponse response) {
+                var command = AuthMapper.toRegisterCommand(request);
+                var accessToken = registerCommandHandler.Handle(command);
 
-        var cookie = ResponseCookie.from("scrumify_access_token", accessToken)
-                .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
-                .path("/")
-                .build();
+                var cookie = ResponseCookie.from("scrumify_access_token", accessToken)
+                                .httpOnly(true)
+                                .secure(false)
+                                .sameSite("Lax")
+                                .path("/")
+                                .build();
 
-        response.addHeader(
-                HttpHeaders.SET_COOKIE,
-                cookie.toString());
-    }
+                response.addHeader(
+                                HttpHeaders.SET_COOKIE,
+                                cookie.toString());
+        }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public void login(
-            @Valid @RequestBody LoginRequest request,
-            HttpServletResponse response) {
-        var command = AuthMapper.toLoginCommand(request);
-        var accessToken = loginCommandHandler.Handle(command);
+        @PostMapping("/login")
+        @ResponseStatus(HttpStatus.OK)
+        public void login(
+                        @Valid @RequestBody LoginRequest request,
+                        HttpServletResponse response) {
+                var command = AuthMapper.toLoginCommand(request);
+                var accessToken = loginCommandHandler.Handle(command);
 
-        var cookie = ResponseCookie.from("scrumify_access_token", accessToken)
-                .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
-                .path("/")
-                .build();
+                var cookie = ResponseCookie.from("scrumify_access_token", accessToken)
+                                .httpOnly(true)
+                                .secure(false)
+                                .sameSite("Lax")
+                                .path("/")
+                                .build();
 
-        response.addHeader(
-                HttpHeaders.SET_COOKIE,
-                cookie.toString());
-    }
+                response.addHeader(
+                                HttpHeaders.SET_COOKIE,
+                                cookie.toString());
+        }
 
-    @GetMapping("/me")
-    @PreAuthorize("hasRole('MEMBER')")
-    public MeResponse me() {
-        var result = meQueryHandler.Handle();
-        return AuthMapper.toMeResponse(result);
-    }
+        @GetMapping("/me")
+        @PreAuthorize("hasRole('MEMBER')")
+        public MeResponse me() {
+                var result = meQueryHandler.Handle();
+                return AuthMapper.toMeResponse(result);
+        }
 
         @PostMapping("/logout")
         @ResponseStatus(HttpStatus.OK)
