@@ -1,6 +1,9 @@
 package com.scrumify.scrumify.infrastructure.security;
 
 import com.scrumify.scrumify.infrastructure.filter.TraceIdFilter;
+
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
