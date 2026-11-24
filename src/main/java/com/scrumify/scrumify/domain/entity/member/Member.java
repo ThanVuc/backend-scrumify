@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,9 +46,10 @@ public class Member {
     @Setter
     private User user;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     @Setter
-    private String role;
+    private MemberRole role;
 
     @Column(name = "joined_at", nullable = false)
     private Instant joinedAt = Instant.now();

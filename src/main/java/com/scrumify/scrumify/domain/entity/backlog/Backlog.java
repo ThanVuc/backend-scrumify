@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "backlogs")
@@ -32,6 +33,7 @@ public class Backlog {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false, unique = true)
+    @Setter
     private Project project;
 
     @Column(name = "created_at", nullable = false)

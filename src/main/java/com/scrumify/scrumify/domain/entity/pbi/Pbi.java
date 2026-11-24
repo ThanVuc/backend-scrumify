@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,17 +55,20 @@ public class Pbi {
     @Setter
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     @Setter
-    private String type;
+    private PbiType type;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     @Setter
-    private String status;
+    private PbiStatus status;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 16)
     @Setter
-    private String priority;
+    private PbiPriority priority;
 
     @Column(name = "move_to_top_at")
     @Setter

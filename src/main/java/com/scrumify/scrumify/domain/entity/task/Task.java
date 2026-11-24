@@ -16,6 +16,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,9 +53,10 @@ public class Task {
     @Setter
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     @Setter
-    private String status;
+    private TaskStatus status;
 
     @Column(name = "is_debt", nullable = false)
     @Setter
@@ -67,9 +70,10 @@ public class Task {
     @Setter
     private LocalDate dueDate;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
     @Setter
-    private Integer priority;
+    private TaskPriority priority;
 
     @Column(nullable = false)
     @Setter

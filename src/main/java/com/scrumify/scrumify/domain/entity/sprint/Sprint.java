@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,9 +50,10 @@ public class Sprint {
     @Setter
     private String goal;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 32)
     @Setter
-    private String status;
+    private SprintStatus status;
 
     @Column(name = "start_date")
     @Setter
