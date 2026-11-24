@@ -15,7 +15,6 @@ import com.scrumify.scrumify.application.auth.command.login.LoginCommandHandler;
 import com.scrumify.scrumify.application.auth.command.register.RegisterCommandHandler;
 import com.scrumify.scrumify.application.auth.query.me.MeQueryHandler;
 
-import ch.qos.logback.core.util.Duration;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
