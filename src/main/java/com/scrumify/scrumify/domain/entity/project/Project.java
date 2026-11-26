@@ -61,7 +61,7 @@ public class Project {
     @Setter
     private String name;
 
-    @Column(name = "code_prefix", nullable = false, unique = true, length = 16)
+    @Column(name = "code_prefix", nullable = false, length = 16)
     @Setter
     private String codePrefix;
 
