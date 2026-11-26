@@ -7,6 +7,7 @@ import java.util.UUID;
 public record ProjectListItemResult(
         UUID id,
         String name,
+        String description,
         List<MemberSummaryResult> members,
         ActiveSprintSummaryResult activeSprint,
         long activePBIsCount,

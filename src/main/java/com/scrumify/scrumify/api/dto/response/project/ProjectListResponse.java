@@ -6,6 +6,7 @@ public record ProjectListResponse(List<ProjectListItem> items) {
     public record ProjectListItem(
             java.util.UUID id,
             String name,
+            String description,
             List<MemberSummary> members,
             ActiveSprintSummary activeSprint,
             long activePBIsCount,

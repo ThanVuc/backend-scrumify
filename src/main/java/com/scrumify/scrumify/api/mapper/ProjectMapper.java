@@ -36,6 +36,7 @@ public final class ProjectMapper {
                 .map(project -> new ProjectListResponse.ProjectListItem(
                         project.id(),
                         project.name(),
+                        project.description(),
                         project.members().stream()
                                 .map(member -> new ProjectListResponse.MemberSummary(
                                         member.id(), member.userId(), member.name()))

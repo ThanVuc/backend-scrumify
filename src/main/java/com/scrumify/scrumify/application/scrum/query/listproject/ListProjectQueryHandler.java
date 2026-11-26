@@ -54,6 +54,7 @@ public class ListProjectQueryHandler {
                     return new ProjectListItemResult(
                             project.getId(),
                             project.getName(),
+                            project.getDescription(),
                             members,
                             activeSprint,
                             pbiRepository.countActiveByProjectId(project.getId()),
