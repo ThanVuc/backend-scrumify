@@ -1,6 +1,8 @@
 package com.scrumify.scrumify.infrastructure.persistence.repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
@@ -23,7 +25,17 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public List<Member> saveAll(List<Member> members) {
+        return jpaMemberRepository.saveAll(members);
+    }
+
+    @Override
     public List<Member> findByProjectId(UUID projectId) {
         return jpaMemberRepository.findByProjectIdOrderByJoinedAtAsc(projectId);
+    }
+
+    @Override
+    public Set<UUID> findUserIdsByProjectIdAndUserIdIn(UUID projectId, Collection<UUID> userIds) {
+        return jpaMemberRepository.findUserIdsByProjectIdAndUserIdIn(projectId, userIds);
     }
 }

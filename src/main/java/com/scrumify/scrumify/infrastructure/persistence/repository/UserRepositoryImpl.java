@@ -1,5 +1,7 @@
 package com.scrumify.scrumify.infrastructure.persistence.repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.scrumify.scrumify.application.auth.repository.UserRepository;
 import com.scrumify.scrumify.domain.entity.user.User;
+import com.scrumify.scrumify.domain.entity.user.UserStatus;
 import com.scrumify.scrumify.infrastructure.persistence.jpa.JpaUserRepository;
 
 @Repository
@@ -34,5 +37,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findById(UUID id) {
         return jpaUserRepository.findById(id);
+    }
+
+    @Override
+    public List<User> findAllByEmailInIgnoreCaseAndStatus(Collection<String> emails, UserStatus status) {
+        return jpaUserRepository.findAllByLowerEmailInAndStatus(emails, status);
     }
 }
