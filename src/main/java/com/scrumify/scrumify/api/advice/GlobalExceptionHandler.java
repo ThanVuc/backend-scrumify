@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -80,6 +81,14 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
         List<ValidationErrorResponse.FieldError> errors = List.of(
                 new ValidationErrorResponse.FieldError(ex.getName(), "Invalid value for " + ex.getName()));
+        return buildValidationResponse(errors, request, ex);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ValidationErrorResponse> handleMessageNotReadable(
+            HttpMessageNotReadableException ex, HttpServletRequest request) {
+        List<ValidationErrorResponse.FieldError> errors = List.of(
+                new ValidationErrorResponse.FieldError("body", "Malformed or invalid request payload"));
         return buildValidationResponse(errors, request, ex);
     }
 

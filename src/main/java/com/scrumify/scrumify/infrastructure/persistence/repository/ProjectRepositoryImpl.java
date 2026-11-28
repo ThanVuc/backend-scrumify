@@ -32,4 +32,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     public Optional<Project> findDetailByIdAndUserId(UUID projectId, UUID userId) {
         return jpaProjectRepository.findDetailByIdAndMemberUserId(projectId, userId);
     }
+
+    @Override
+    public Optional<Project> findByIdAndUserIdForUpdate(UUID projectId, UUID userId) {
+        return jpaProjectRepository.findByIdAndMemberUserIdForUpdate(projectId, userId);
+    }
 }

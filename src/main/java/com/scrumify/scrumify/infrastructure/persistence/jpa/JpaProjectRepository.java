@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.scrumify.scrumify.domain.entity.project.Project;
+
+import jakarta.persistence.LockModeType;
 
 public interface JpaProjectRepository extends JpaRepository<Project, UUID> {
     @Query("""
@@ -25,6 +28,16 @@ public interface JpaProjectRepository extends JpaRepository<Project, UUID> {
             where p.id = :projectId and m.user.id = :userId
             """)
     Optional<Project> findDetailByIdAndMemberUserId(
+            @Param("projectId") UUID projectId,
+            @Param("userId") UUID userId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+            select p from Project p
+            join Member m on m.project = p
+            where p.id = :projectId and m.user.id = :userId
+            """)
+    Optional<Project> findByIdAndMemberUserIdForUpdate(
             @Param("projectId") UUID projectId,
             @Param("userId") UUID userId);
 }

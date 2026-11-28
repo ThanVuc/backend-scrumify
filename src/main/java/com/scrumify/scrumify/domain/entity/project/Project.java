@@ -75,6 +75,10 @@ public class Project {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    @Column(name = "next_issue_number", nullable = false)
+    @Setter
+    private Integer nextIssueNumber = 1;
+
     public void addMember(Member member) {
         members.add(member);
         member.setProject(this);

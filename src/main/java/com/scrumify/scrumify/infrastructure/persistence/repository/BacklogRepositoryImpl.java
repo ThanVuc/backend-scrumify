@@ -1,5 +1,8 @@
 package com.scrumify.scrumify.infrastructure.persistence.repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.stereotype.Repository;
 
 import com.scrumify.scrumify.application.scrum.repository.BacklogRepository;
@@ -17,5 +20,10 @@ public class BacklogRepositoryImpl implements BacklogRepository {
     @Override
     public Backlog save(Backlog backlog) {
         return jpaBacklogRepository.save(backlog);
+    }
+
+    @Override
+    public Optional<Backlog> findByProjectId(UUID projectId) {
+        return jpaBacklogRepository.findByProjectId(projectId);
     }
 }

@@ -10,4 +10,5 @@ public interface ProjectRepository {
     Project save(Project project);
     List<Project> findAllByUserId(UUID userId);
     Optional<Project> findDetailByIdAndUserId(UUID projectId, UUID userId);
+    Optional<Project> findByIdAndUserIdForUpdate(UUID projectId, UUID userId);
 }

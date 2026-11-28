@@ -36,6 +36,7 @@ public class Pbi {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "backlog_id", nullable = false)
+    @Setter
     private Backlog backlog;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -87,4 +88,8 @@ public class Pbi {
     @Column(name = "archived_at")
     @Setter
     private Instant archivedAt;
+
+    public void touchUpdatedAt() {
+        this.updatedAt = Instant.now();
+    }
 }

@@ -22,4 +22,9 @@ public class SprintRepositoryImpl implements SprintRepository {
     public Optional<Sprint> findActiveByProjectId(UUID projectId) {
         return jpaSprintRepository.findFirstByProjectIdAndStatus(projectId, SprintStatus.ACTIVE);
     }
+
+    @Override
+    public Optional<Sprint> findByIdAndProjectId(UUID sprintId, UUID projectId) {
+        return jpaSprintRepository.findByIdAndProjectId(sprintId, projectId);
+    }
 }
